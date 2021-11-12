@@ -11,10 +11,10 @@ const {
 
 const reviewsRouter = express.Router();
 
-reviewsRouter.route('/reviews').post(createReviews).get(getAllReviews);
+reviewsRouter.route('/').post(createReviews).get(getAllReviews);
 
 reviewsRouter
-	.route('/reviews/:id')
+	.route('/:id')
 	.put(updateReviews)
 	.get(getReviewsById)
 	.delete(deleteReviews);

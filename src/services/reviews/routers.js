@@ -4,8 +4,20 @@ import q2m from 'query-to-mongo';
 
 const getAllReviews = async (req, res, next) => {
 	try {
-		const allReviews = await reviewsModel.find();
-		res.send(allReviews);
+		const querys = q2m(req.query);
+		const total = await reviewsModel.countDocuments(querys.criteria);
+		const allReviews = await reviewsModel
+			.find(querys.criteria)
+			.limit(querys.options.limit)
+			.skip(querys.options.skip)
+			.sort(querys.options.sort);
+
+		res.send({
+			link: querys.links('/reviews/review', total),
+			pageTotal: Math.ceil(total / querys.options.limit),
+			total,
+			allReviews,
+		});
 	} catch (error) {
 		next(error);
 	}
