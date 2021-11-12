@@ -5,6 +5,7 @@ import reviewsModel from "../reviews/schema.js";
 const addImageToProduct =  async(req, res, next) => {
   try {
       const cloudImage = req.file.path
+      
       const {name, description, price, imageUrl, brand, category} = req.body
       const newProduct = new ProductModel(name, description, price, imageUrl, brand, category, {$set: {imageUrl: cloudImage}})
       await newProduct.save()
