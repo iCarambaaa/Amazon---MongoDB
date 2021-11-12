@@ -1,5 +1,6 @@
 import q2m from "query-to-mongo";
 import ProductModel from "./schema.js";
+import reviewsModel from "../reviews/schema.js";
 
 const createNewProduct = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ const getAllProducts = async (req, res, next) => {
       .limit(mongoQuery.options.limit)
       .skip(mongoQuery.options.skip)
       .sort(mongoQuery.options.sort)
-      .populate({ path: "review" });
+      .populate({ path: "reviews" });
       res.send({
         links: mongoQuery.links("/products", total),
         pageTotal: Math.ceil(total / mongoQuery.options.limit),
@@ -57,7 +58,9 @@ const editSingleProduct = async (req, res, next) => {
 
 const deleteSingleProduct = async (req, res, next) => {
   try {
+      const reviews = await reviewsModel.deleteMany({productId: req.params.id})
       const deletedProduct = await ProductModel.findByIdAndDelete(req.params.id)
+      // const deletedReviews = reviews.deleteMany({})
       res.status(204).send({ message: `${req.params.id} deleted!!`})
   } catch (error) {
     next(error);

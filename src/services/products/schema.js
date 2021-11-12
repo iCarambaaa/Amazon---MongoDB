@@ -10,8 +10,8 @@ const productSchema = new Schema(
         imageUrl: {type:String, required: true},
         price: {type:Number, required: true},
         category: {type:String, required: false},
-        asin: { type:String, required:true},
-        quantity: { type:Number, required:true },
+        asin: { type:String},
+        quantity: { type:Number},
         reviews: [
             { type: Schema.Types.ObjectId, ref:"Review"}
         ]

@@ -3,8 +3,10 @@ import cors from 'cors';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from "mongoose"
 import reviewsRouter from './services/reviews/index.js';
-//import authorsRouter from "./services/authors/index.js"
+import productsRouter from "./services/products/index.js";
+import cartsRouter from "./services/shoppingCart/index.js"
 import { notFoundHandler, badRequestHandler, genericErrorHandler, unauthorizedHandler } from "./errorHandlers.js"
+
 const server = express();
 
 const port = process.env.PORT || 3001
@@ -17,7 +19,8 @@ server.use(express.json())
 // ********************************* ROUTES ********************************************
 
 server.use("/reviews", reviewsRouter)
-//server.use("/authors", authorsRouter)
+server.use("/products", productsRouter)
+server.use("/shoppingCart", cartsRouter) 
 
 // ********************************* ERROR HANDLERS ************************************
 
