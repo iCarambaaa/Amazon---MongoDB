@@ -2,6 +2,19 @@ import q2m from "query-to-mongo";
 import ProductModel from "./schema.js";
 import reviewsModel from "../reviews/schema.js";
 
+const addImageToProduct =  async(req, res, next) => {
+  try {
+      const cloudImage = req.file.path
+      const {name, description, price, imageUrl, brand, category} = req.body
+      const newProduct = new ProductModel(name, description, price, imageUrl, brand, category, {$set: {imageUrl: cloudImage}})
+      await newProduct.save()
+
+      res.status(201).send({ newProduct })
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createNewProduct = async (req, res, next) => {
   try {
       const newProduct = new ProductModel(req.body)
@@ -67,12 +80,17 @@ const deleteSingleProduct = async (req, res, next) => {
   }
 };
 
+
+
+
 const productHandlers = {
+  addImageToProduct,
   createNewProduct,
   getAllProducts,
   getSingleProduct,
   editSingleProduct,
-  deleteSingleProduct,
+  deleteSingleProduct
+  
 };
 
 export default productHandlers;
