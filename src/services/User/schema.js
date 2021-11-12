@@ -1,21 +1,21 @@
 import mongoose from 'mongoose';
-
+import ProductModel from '../products/schema.js'
 const { Schema, model } = mongoose;
 const userSchema = new Schema(
 	{
 		firstName: { type: String, required: true },
-		lastName: { type: Number, required: true },
-		email: { type: Number, required: true },
-		age: { type: String, required: true },
+		lastName: { type: String, required: true },
+		email: { type: String, required: true },
+		age: { type: Number, required: true },
 		purchaseHistory: [
-			{
-				name: { type: String },
-				brand: { type: String },
-				price: { type: Number },
-				category: { type: String },
-				purchaseDate: { type: Date },
-				quantity: { type: Number}
-			  },
+			{  type: Schema.Types.ObjectId, ref: "ProductModel"},
+				// name: { type: String },
+				// brand: { type: String },
+				// price: { type: Number },
+				// category: { type: String },
+				// purchaseDate: { type: Date },
+				// quantity: { type: Number}
+			  
 		],
 	},
 	{

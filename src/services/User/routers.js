@@ -39,7 +39,7 @@ const getUserById = async (req, res, next) => {
 	try {
 		const id = req.params.id;
 		const User = await userModel.findById(id);
-		if (Reviews) {
+		if (User) {
 			res.send(User);
 		}
 	} catch (error) {

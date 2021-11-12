@@ -17,7 +17,7 @@ cartsRouter.post("/:ownerId/addToCart", async (req, res, next) => {
       const isProductThere = await CartModel.findOne({
         ownerId: req.params.ownerId,
         status: "active",
-        "products.asin": purchasedProduct.asin,
+        "productId": productId
       });
 
       if (isProductThere) {
@@ -26,7 +26,7 @@ cartsRouter.post("/:ownerId/addToCart", async (req, res, next) => {
           {
             ownerId: req.params.ownerId,
             status: "active",
-            "products.asin": purchasedProduct.asin,
+            "productId": productId
           }, // WHO. If we target not only the owner and the status but also the specific product (which is an element of products array), mongo is going to store the index of that element into a variable called "positional operator" --> $
           {
             $inc: { "products.$.quantity": quantity }, // products[index].quantity += quantity

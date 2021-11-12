@@ -7,8 +7,8 @@ const cartSchema = new Schema(
     ownerId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     status: { type: String, required: true, enum: ["active", "paid"] },
     products: [
-      {
-        asin: String,
+      { 
+        quantity: Number,
         name: String,
         description: String,
         brand: String,
