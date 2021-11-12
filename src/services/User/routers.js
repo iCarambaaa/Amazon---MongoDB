@@ -79,7 +79,7 @@ const deleteUser = async (req, res, next) => {
 
 const pushproductinCart = async (req, res, next) => {
 	try {
-		const product = await ProductModel.findById(req.body.productID, { _id: 0 });
+		const product = await ProductModel.findById(req.body.productID);
 		if (product) {
 			const addproduct = { ...product.toObject(), purchaseDate: new Date() };
 			const updatedUser = await userModel.findByIdAndUpdate(
