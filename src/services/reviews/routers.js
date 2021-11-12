@@ -1,4 +1,5 @@
 import reviewsModel from './schema.js';
+import productModel from '../products/schema.js';
 import createHttpError from 'http-errors';
 import q2m from 'query-to-mongo';
 
@@ -25,8 +26,10 @@ const getAllReviews = async (req, res, next) => {
 
 const createReviews = async (req, res, next) => {
 	try {
+		const productId =  req.body.productId
 		const newReviews = new reviewsModel(req.body);
 		const { _id } = await newReviews.save();
+		const products = await productModel.findByIdAndUpdate(productId, {$push: {reviews: _id}})
 		console.log(newReviews);
 		res.status(200).send(_id);
 	} catch (error) {
@@ -65,11 +68,13 @@ const updateReviews = async (req, res, next) => {
 const deleteReviews = async (req, res, next) => {
 	try {
 		const id = req.params.id;
+		const productId = req.body.productId;
+		const updateProduct = await productModel.findByIdAndUpdate(productId, {$pull: {reviews: id}})
 		const deleteReviews = await reviewsModel.findByIdAndDelete(id);
 		if (deleteReviews) {
 			res.status(200).send();
 		} else {
-			next(createHttpError(404, `dReviews with id ${id} not found!`));
+			next(createHttpError(404, `Reviews with id ${id} not found!`));
 		}
 	} catch (error) {
 		next(error);

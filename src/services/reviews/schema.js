@@ -11,4 +11,4 @@ const reviewsSchema = new Schema(
 		timestamps: true,
 	},
 );
-export default model('reviews', reviewsSchema);
+export default model('Review', reviewsSchema);
