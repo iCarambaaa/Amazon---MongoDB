@@ -8,7 +8,14 @@ const userSchema = new Schema(
 		email: { type: Number, required: true },
 		age: { type: String, required: true },
 		purchaseHistory: [
-			
+			{
+				name: { type: String },
+				brand: { type: String },
+				price: { type: Number },
+				category: { type: String },
+				purchaseDate: { type: Date },
+				quantity: { type: Number}
+			  },
 		],
 	},
 	{
